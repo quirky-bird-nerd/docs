@@ -55,12 +55,13 @@
         ]
       },
       {
-        "tab": "API Flows",
+        "tab": "Workflows",
         "groups": [
           {
-            "group": "Patron",
+            "group": "API Workflows",
             "pages": [
-              "api-flows/patron"
+              "api-flows/patron",
+			  "api-flows/staff"
             ]
           },
           {
