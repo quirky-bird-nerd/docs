@@ -53,7 +53,24 @@
             ]
           }
         ]
-      }
+      },
+      {
+        "tab": "API Flows",
+        "groups": [
+          {
+            "group": "Patron",
+            "pages": [
+              "api-flows/patron"
+            ]
+          },
+          {
+            "group": "Staff",
+            "pages": [
+              "api-flows/staff"
+            ]
+          }
+        ]
+      }	  
     ],
     "global": {
       "anchors": [
