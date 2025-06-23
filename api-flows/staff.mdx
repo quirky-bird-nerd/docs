@@ -1,5 +1,5 @@
 ---
-title: "New file"
+title: "Staff"
 description: "Description of your new file."
 ---
 
@@ -174,11 +174,11 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 ### Request
 
-Each dish is assigned to a specific station (e.g., cold, hot, beverages). Stations responsible for each dish see their respective parts of the order on their KDS. The client sends an HTTP request to the `order/{id}/dishes `endpoint, filtering the response to only include dishes that belong to specific `station`. 
+Each dish is assigned to a specific station (e.g., cold, hot, beverages). Stations responsible for each dish see their respective parts of the order on their KDS. The client sends an HTTP request to the `order/{id}/dishes `endpoint, filtering the response to only include dishes that belong to specific `station`.
 
 <RequestExample>
 
-``` filename
+```filename
 curl -X GET "{{baseURL}}/orders/681e38bfc19ebac4a9142544/dishes?filter=station.eq~hot"
 ```
 
@@ -190,7 +190,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 <ResponseExample>
 
-``` filename
+```filename
 {
   "results": [
     {
@@ -345,7 +345,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 ## 6. Ready order for assembly
 
-When the station completes preparation of their part of the order, they mark it as Ready for Assembly on their KDS. The expeditor is notified when all stations have their parts marked as ready. 
+When the station completes preparation of their part of the order, they mark it as Ready for Assembly on their KDS. The expeditor is notified when all stations have their parts marked as ready.
 
 ## 7. Assemble order
 
@@ -355,7 +355,7 @@ The expeditor assembles the parts of the order from different stations. Once ass
 
 <RequestExample>
 
-``` filename
+```filename
 curl -X 'PUT' \
    '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
    -H 'Authorization: Bearer 65f1e860-0f4f-470a-b833-13346e87fde7' \
@@ -385,7 +385,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 <ResponseExample>
 
-``` filename
+```filename
 {
   "id": "681e38bfc19ebac4a9142544",
   "created_at": "2024-05-23T06:21:08.754Z",
