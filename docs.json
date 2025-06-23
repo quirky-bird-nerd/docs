@@ -58,16 +58,10 @@
         "tab": "Workflows",
         "groups": [
           {
-            "group": "API Workflows",
+            "group": "Workflow Examples",
             "pages": [
               "api-flows/patron",
 			  "api-flows/staff"
-            ]
-          },
-          {
-            "group": "Staff",
-            "pages": [
-              "api-flows/staff"
             ]
           }
         ]
