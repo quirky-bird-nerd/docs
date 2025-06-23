@@ -1,0 +1,407 @@
+---
+title: "New file"
+description: "Description of your new file."
+---
+
+# Staff API Flow
+
+This flow describes how a staff members handle orders in the Kitchen Delivery System (KDS).
+
+## 1. Display orders
+
+### Request
+
+The client sends an HTTP request to the `orders` endpoint to retrieve a list of orders. This example shows a request for orders that are ready for pickup and have a priority of 1.
+
+<RequestExample>
+
+```filename
+curl -X GET "{{baseURL}}/orders?filter=status.eq~Ready%20for%20Pickup|priority.eq~1"
+```
+
+</RequestExample>
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains each the orders you specified, along with their dish IDs, patron name, status, and priority.
+
+<ResponseExample>
+
+```filename
+{
+  "results": [
+    {
+      "id": "681e38bfc19ebac4a9142549",
+      "name": "Burnice",
+      "table_number": null,
+      "status": "Ready for Pickup",
+      "priority": 1,
+      "dish_ids": [
+        "681e38bfc19ebac4a914252e",
+        "681e38bfc19ebac4a91424ec",
+        "681e38bfc19ebac4a9142512"
+      ],
+      "special_requests": null,
+      "created_at": "2024-07-04T16:46:14.137Z",
+      "updated_at": "2025-05-09T11:45:28.184Z",
+      "scheduled_at": "2026-04-10T03:06:18.810Z"
+    }
+  ],
+  "total_results": 1
+}
+```
+
+</ResponseExample>
+
+## 2. Prioritize orders
+
+### Request
+
+The client sends an HTTP request to the `orders/{id}`endpoint, containing the order ID. This allows the expeditor to adjust the priority of the order from 1 to 5, with 1 being the highest priority. The example below sets`priority` to `1`.
+
+<RequestExample>
+
+```filename
+curl -X 'PUT' \
+   '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
+   -H 'Authorization: Bearer fcb0d3f1-0077-430c-b84f-c1cddc1d048b' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: application/json' \
+   -d '{
+      "name": "Trace",
+      "table_number": 19,
+      "status": "Ready for Pickup",
+      "priority": 1,
+      "dish_ids": [
+        "681e38bfc19ebac4a91424c3",
+        "681e38bfc19ebac4a91424fa",
+        "681e38bfc19ebac4a9142520",
+	"681e38bfc19ebac4a91424c9"
+      ],
+      "special_requests": null,
+      "scheduled_at": null
+      }'
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID and an updated `priority`of `1`.
+
+<ResponseExample>
+
+```filename
+{
+  "id": "681e38bfc19ebac4a9142544",
+  "created_at": "2024-05-23T06:21:08.754Z",
+  "updated_at": "2025-06-23T00:13:33.678Z",
+  "scheduled_at": null,
+  "table_number": 19,
+  "status": "Ready for Pickup",
+  "priority": 1,
+  "dish_ids": [
+    "681e38bfc19ebac4a91424c3",
+    "681e38bfc19ebac4a91424fa",
+    "681e38bfc19ebac4a9142520",
+    "681e38bfc19ebac4a91424c9"
+  ],
+  "special_requests": null
+}
+```
+
+</ResponseExample>
+
+## 3. Initiate preparation
+
+### Request
+
+Now that the order is prioritzed, the expeditor can initiate the preparation of the order by setting the order status to `In Progress`. The client sends an HTTP request to the `orders/{id}`endpoint.
+
+<RequestExample>
+
+```filename
+
+curl -X 'PUT' \
+   '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
+   -H 'Authorization: Bearer fcb0d3f1-0077-430c-b84f-c1cddc1d048b' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: application/json' \
+   -d '{
+      "name": "Trace",
+      "table_number": 19,
+      "status": "In Progress",
+      "priority": 1,
+      "dish_ids": [
+        "681e38bfc19ebac4a91424c3",
+        "681e38bfc19ebac4a91424fa",
+        "681e38bfc19ebac4a9142520",
+	"681e38bfc19ebac4a91424c9"
+      ],
+      "special_requests": null,
+      "scheduled_at": null
+      }'
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with the updated status.
+
+<ResponseExample>
+
+```filename
+{
+  "id": "681e38bfc19ebac4a9142544",
+  "created_at": "2024-05-23T06:21:08.754Z",
+  "updated_at": "2025-06-23T00:27:24.615Z",
+  "scheduled_at": null,
+  "table_number": 19,
+  "status": "In Progress",
+  "priority": 1,
+  "dish_ids": [
+    "681e38bfc19ebac4a91424c3",
+    "681e38bfc19ebac4a91424fa",
+    "681e38bfc19ebac4a9142520",
+    "681e38bfc19ebac4a91424c9"
+  ],
+  "special_requests": null
+}
+```
+
+</ResponseExample>
+
+## 4. Order preparation by station
+
+### Request
+
+Each dish is assigned to a specific station (e.g., cold, hot, beverages). Stations responsible for each dish see their respective parts of the order on their KDS. The client sends an HTTP request to the `order/{id}/dishes `endpoint, filtering the response to only include dishes that belong to specific `station`. 
+
+<RequestExample>
+
+``` filename
+curl -X GET "{{baseURL}}/orders/681e38bfc19ebac4a9142544/dishes?filter=station.eq~hot"
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body returns the orders with a `station `of `hot`.
+
+<ResponseExample>
+
+``` filename
+{
+  "results": [
+    {
+      "id": "681e38bfc19ebac4a91424c3",
+      "created_at": "2024-06-19T23:08:18.836Z",
+      "updated_at": "2025-05-09T11:22:04.092Z",
+      "name": "Calamari Fritti",
+      "description": "Fried squid rings served with a side of marinara sauce or lemon wedges.",
+      "category": "Appetizers",
+      "price": 999,
+      "preparation_time": 45,
+      "image_name": "calamari_fritti",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a9",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c4"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142494",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c5"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a914249d",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c6"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a7",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c7"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142486",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424c8"
+        }
+      ],
+      "station": "hot"
+    },
+    {
+      "id": "681e38bfc19ebac4a91424fa",
+      "created_at": "2025-01-07T03:51:22.713Z",
+      "updated_at": "2025-05-09T03:20:40.600Z",
+      "name": "Gnocchi al Pesto",
+      "description": "Soft potato dumplings tossed with a basil pesto sauce and Parmesan cheese.",
+      "category": "Main Course",
+      "price": 8999,
+      "preparation_time": 45,
+      "image_name": "gnocchi_al_pesto",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142497",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424fb"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a5",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424fc"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a914249e",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424fd"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142494",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424fe"
+        }
+      ],
+      "station": "hot"
+    }
+  ],
+  "total_results": 2
+}
+```
+
+</ResponseExample>
+
+## 5. Display dish ingredients
+
+### Request
+
+When the staff begins preparing dishes at their station, they need to know each dish's ingredients. The client sends an HTTP request to `dishes/{id}/ingredients`endpoint, using the dish ID.
+
+<RequestExample>
+
+```filename
+curl -X GET "{{baseURL}}/dishes/681e38bfc19ebac4a91424c3/ingredients"
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with each ingredient.
+
+<ResponseExample>
+
+```filename
+{
+  "results": [
+    {
+      "id": "681e38bfc19ebac4a9142486",
+      "created_at": "2024-10-29T12:11:46.128Z",
+      "updated_at": "2025-05-09T11:54:12.247Z",
+      "name": "Saffron",
+      "in_stock_qty": 27,
+      "price": 299
+    },
+    {
+      "id": "681e38bfc19ebac4a9142494",
+      "created_at": "2024-11-26T23:10:02.580Z",
+      "updated_at": "2025-05-09T00:15:58.754Z",
+      "name": "Prosciutto",
+      "in_stock_qty": 15,
+      "price": 199
+    },
+    {
+      "id": "681e38bfc19ebac4a914249d",
+      "created_at": "2025-01-13T04:16:14.516Z",
+      "updated_at": "2025-05-09T14:55:49.829Z",
+      "name": "White Wine",
+      "in_stock_qty": 90,
+      "price": 5999
+    },
+    {
+      "id": "681e38bfc19ebac4a91424a7",
+      "created_at": "2025-02-14T02:27:21.200Z",
+      "updated_at": "2025-05-09T06:33:34.929Z",
+      "name": "Onions",
+      "in_stock_qty": 37,
+      "price": 6999
+    },
+    {
+      "id": "681e38bfc19ebac4a91424a9",
+      "created_at": "2025-03-03T04:41:17.419Z",
+      "updated_at": "2025-05-08T23:44:32.009Z",
+      "name": "Seafood Mix",
+      "in_stock_qty": 61,
+      "price": 899
+    }
+  ],
+  "total_results": 5
+}
+```
+
+</ResponseExample>
+
+## 6. Ready order for assembly
+
+When the station completes preparation of their part of the order, they mark it as Ready for Assembly on their KDS. The expeditor is notified when all stations have their parts marked as ready. 
+
+## 7. Assemble order
+
+### Request
+
+The expeditor assembles the parts of the order from different stations. Once assembled, the expeditor updates the order status to `On the Way`. The client sends an HTTP request to the `orders/{id} `endpoint, updating the status of the order from `In Progress` to `On the Way`.
+
+<RequestExample>
+
+``` filename
+curl -X 'PUT' \
+   '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
+   -H 'Authorization: Bearer 65f1e860-0f4f-470a-b833-13346e87fde7' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: application/json' \
+   -d '{
+      "name": "Trace",
+      "table_number": 19,
+      "status": "On the Way",
+      "priority": 1,
+      "dish_ids": [
+        "681e38bfc19ebac4a91424c3",
+        "681e38bfc19ebac4a91424fa",
+        "681e38bfc19ebac4a9142520",
+	"681e38bfc19ebac4a91424c9"
+      ],
+      "special_requests": null,
+      "scheduled_at": null
+      }'
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID you specified and a `status `of `On the Way`.
+
+<ResponseExample>
+
+``` filename
+{
+  "id": "681e38bfc19ebac4a9142544",
+  "created_at": "2024-05-23T06:21:08.754Z",
+  "updated_at": "2025-06-23T01:05:53.343Z",
+  "scheduled_at": null,
+  "table_number": 19,
+  "status": "On the Way",
+  "priority": 1,
+  "dish_ids": [
+    "681e38bfc19ebac4a91424c3",
+    "681e38bfc19ebac4a91424fa",
+    "681e38bfc19ebac4a9142520",
+    "681e38bfc19ebac4a91424c9"
+  ],
+  "special_requests": null
+}
+```
+
+</ResponseExample>

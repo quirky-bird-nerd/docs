@@ -1,0 +1,384 @@
+---
+title: "Patron"
+---
+
+# Patron API Flow
+
+This flow describes how a patron browses through the app and places an order from the menu.
+
+## 1. Select a food category
+
+### Request
+
+The client sends an HTTP request to the `dishes` endpoint and retrieves a list of dishes for the selected food category tab. In the following example, the user selected the Appetizers tab.
+
+<RequestExample>
+
+```filename
+curl -X GET "{{baseUrl}}/dishes?filter=category.eq~Appetizers"
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains each dish and its details, including the IDs of each ingredient.
+
+<ResponseExample>
+
+```filename
+{
+  "results": [
+    {
+      "id": "681e38bfc19ebac4a91424b2",
+      "created_at": "2024-09-07T19:03:36.233Z",
+      "updated_at": "2025-05-09T06:02:09.134Z",
+      "name": "Bruschetta al Pomodoro",
+      "description": "Toasted bread topped with a mixture of ripe tomatoes, garlic, basil, and olive oil.",
+      "category": "Appetizers",
+      "preparation_time": 40,
+      "price": 399,
+      "image_name": "bruschetta_al_pomodoro",
+      "station": "cold",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a914248b",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424b3"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142492",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424b4"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a1",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424b5"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424b6",
+      "created_at": "2024-11-07T18:16:07.782Z",
+      "updated_at": "2025-05-09T17:10:05.341Z",
+      "name": "Arancini di Riso",
+      "description": "Crispy, golden rice balls stuffed with a cheesy filling and served with marinara sauce.",
+      "category": "Appetizers",
+      "preparation_time": 60,
+      "price": 599,
+      "image_name": "arancini_di_riso",
+      "station": "hot",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142484",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424b7"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142493",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424b8"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142482",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424b9"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a7",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424ba"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424ad",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424bb"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424ab",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424bc"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424bd",
+      "created_at": "2024-10-12T06:33:49.570Z",
+      "updated_at": "2025-05-09T16:17:16.211Z",
+      "name": "Caprese Salad",
+      "description": "A fresh salad featuring ripe tomatoes, mozzarella cheese, basil, and a drizzle of balsamic vinegar.",
+      "category": "Appetizers",
+      "preparation_time": 40,
+      "price": 1999,
+      "image_name": "caprese_salad",
+      "station": "cold",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424ab",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424be"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142489",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424bf"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424c0",
+      "created_at": "2024-08-04T17:06:23.167Z",
+      "updated_at": "2025-05-08T20:05:00.576Z",
+      "name": "Prosciutto e Melone",
+      "description": "Thin slices of cured ham served with sweet cantaloupe melon.",
+      "category": "Appetizers",
+      "preparation_time": 25,
+      "price": 8999,
+      "image_name": "prosciutto_e_melone",
+      "station": "cold",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a914248a",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424c1"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142494",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424c2"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424c3",
+      "created_at": "2024-06-19T23:08:18.836Z",
+      "updated_at": "2025-05-09T11:22:04.092Z",
+      "name": "Calamari Fritti",
+      "description": "Fried squid rings served with a side of marinara sauce or lemon wedges.",
+      "category": "Appetizers",
+      "preparation_time": 45,
+      "price": 999,
+      "image_name": "calamari_fritti",
+      "station": "hot",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a9",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c4"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142494",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c5"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a914249d",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c6"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a91424a7",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424c7"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142486",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424c8"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424c9",
+      "created_at": "2024-08-26T13:03:35.089Z",
+      "updated_at": "2025-05-09T15:39:59.705Z",
+      "name": "Carpaccio di Manzo",
+      "description": "Thinly sliced raw beef topped with arugula, Parmesan, and a drizzle of olive oil.",
+      "category": "Appetizers",
+      "preparation_time": 40,
+      "price": 3999,
+      "image_name": "carpaccio_di_manzo",
+      "station": "cold",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142488",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424ca"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142495",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424cb"
+        }
+      ]
+    },
+    {
+      "id": "681e38bfc19ebac4a91424cc",
+      "created_at": "2024-11-04T04:11:59.482Z",
+      "updated_at": "2025-05-08T21:33:54.873Z",
+      "name": "Crostini di Fegato",
+      "description": "Toasted bread slices topped with a savory chicken liver pâté.",
+      "category": "Appetizers",
+      "preparation_time": 20,
+      "price": 8999,
+      "image_name": "crostini_di_fegato",
+      "station": "cold",
+      "ingredients": [
+        {
+          "ingredient_id": "681e38bfc19ebac4a914248f",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424cd"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142490",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424ce"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142486",
+          "is_essential": false,
+          "_id": "681e38bfc19ebac4a91424cf"
+        },
+        {
+          "ingredient_id": "681e38bfc19ebac4a9142493",
+          "is_essential": true,
+          "_id": "681e38bfc19ebac4a91424d0"
+        }
+      ]
+    }
+  ],
+  "total_results": 7
+}
+```
+
+</ResponseExample>
+
+## 2. Check ingredient quantities
+
+### Request
+
+The client sends an HTTP request to `ingredients` endpoint, containing the ingredient ID. This allows the app to check if there are enough ingredients to create the dish. Fields for `in_stock_qty` and `name`are included.
+
+<RequestExample>
+
+```filename
+curl -X GET "{{baseUrl}}/ingredients/{id}?fields=in_stock_qty|name"
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the ingredient ID, name, and in-stock quantity.
+
+<ResponseExample>
+
+```filename
+{
+  "id": "681e38bfc19ebac4a914248b",
+  "name": "Bread Crumbs",
+  "in_stock_qty": 50
+}
+```
+
+</ResponseExample>
+
+## 3. View dish details
+
+### Request
+
+The client sends an HTTP request to the `dishes`endpoint, containing the dish ID.
+
+<RequestExample>
+
+```filename
+curl -X GET "{{baseUrl}}/dishes/{id}"
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `200 OK` status code. The response body contains the dish name, ID, prep time, and ingredients.
+
+<ResponseExample>
+
+```filename
+{
+  "id": "681e38bfc19ebac4a91424b2",
+  "created_at": "2024-09-07T19:03:36.233Z",
+  "updated_at": "2025-05-09T06:02:09.134Z",
+  "name": "Bruschetta al Pomodoro",
+  "description": "Toasted bread topped with a mixture of ripe tomatoes, garlic, basil, and olive oil.",
+  "category": "Appetizers",
+  "price": 399,
+  "preparation_time": 40,
+  "image_name": "bruschetta_al_pomodoro",
+  "station": "cold",
+  "ingredients": [
+    {
+      "ingredient_id": "681e38bfc19ebac4a914248b",
+      "is_essential": false,
+      "_id": "681e38bfc19ebac4a91424b3"
+    },
+    {
+      "ingredient_id": "681e38bfc19ebac4a9142492",
+      "is_essential": false,
+      "_id": "681e38bfc19ebac4a91424b4"
+    },
+    {
+      "ingredient_id": "681e38bfc19ebac4a91424a1",
+      "is_essential": false,
+      "_id": "681e38bfc19ebac4a91424b5"
+    }
+  ]
+}
+```
+
+</ResponseExample>
+
+## 4. Add dishes and view cart
+
+The patron adds dishes and views them in their cart.
+
+## 5. Place an order
+
+### Request
+
+The client sends an HTTP request to `orders`endpoint. Make sure to include your base URL, bearer token, and dish IDs. Multiple dish IDs can be separated by commas.
+
+<RequestExample>
+
+```filename
+curl -X 'POST' \
+   '{{baseUrl}}' \
+   -H 'Authorization: Bearer {bearerToken}' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: application/json' \
+   -d '{ 
+      "name": "Jennifer",
+      "table_number": 10,
+      "special_requests": "Easy on the bell peppers",
+      "scheduled_at": null,
+      "dish_ids":["681e38bfc19ebac4a91424b2"]
+}'
+```
+
+</RequestExample>
+
+### Response
+
+If the request is successful, the server responds with a `201 Created` status code. The response body contains the new order ID, when the order was created, status, priority, dish IDs, and any special requests.
+
+<ResponseExample>
+
+```filename
+{"id":"68587bc0ab04476449a28c40","created_at":"2025-06-22T21:55:12.942Z","updated_at":"2025-06-22T21:55:12.942Z","scheduled_at":null,"table_number":10,"status":"Received","priority":3,"dish_ids":["681e38bfc19ebac4a91424b2"],"special_requests":"Easy on the bell peppers"}
+```
+
+</ResponseExample>
+
+## 6. Confirm the order
+
+The patron receives a confirmation of the order and the details are sent to the restaurant staff so they can prepare the order.
