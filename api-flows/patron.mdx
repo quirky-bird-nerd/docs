@@ -12,21 +12,15 @@ This flow describes how a patron browses through the app and places an order fro
 
 The client sends an HTTP request to the `dishes` endpoint and retrieves a list of dishes for the selected food category tab. In the following example, the user selected the Appetizers tab.
 
-<RequestExample>
-
-```filename
+```
 curl -X GET "{{baseUrl}}/dishes?filter=category.eq~Appetizers"
 ```
-
-</RequestExample>
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains each dish and its details, including the IDs of each ingredient.
 
-<ResponseExample>
-
-```filename
+```
 {
   "results": [
     {
@@ -252,29 +246,21 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
-
 ## 2. Check ingredient quantities
 
 ### Request
 
 The client sends an HTTP request to `ingredients` endpoint, containing the ingredient ID. This allows the app to check if there are enough ingredients to create the dish. Fields for `in_stock_qty` and `name`are included.
 
-<RequestExample>
-
-```filename
+```
 curl -X GET "{{baseUrl}}/ingredients/{id}?fields=in_stock_qty|name"
 ```
-
-</RequestExample>
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the ingredient ID, name, and in-stock quantity.
 
-<ResponseExample>
-
-```filename
+```
 {
   "id": "681e38bfc19ebac4a914248b",
   "name": "Bread Crumbs",
@@ -282,29 +268,21 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
-
 ## 3. View dish details
 
 ### Request
 
 The client sends an HTTP request to the `dishes`endpoint, containing the dish ID.
 
-<RequestExample>
-
-```filename
+```
 curl -X GET "{{baseUrl}}/dishes/{id}"
 ```
-
-</RequestExample>
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the dish name, ID, prep time, and ingredients.
 
-<ResponseExample>
-
-```filename
+```
 {
   "id": "681e38bfc19ebac4a91424b2",
   "created_at": "2024-09-07T19:03:36.233Z",
@@ -336,8 +314,6 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
-
 ## 4. Add dishes and view cart
 
 The patron adds dishes and views them in their cart.
@@ -348,9 +324,7 @@ The patron adds dishes and views them in their cart.
 
 The client sends an HTTP request to `orders`endpoint. Make sure to include your base URL, bearer token, and dish IDs. Multiple dish IDs can be separated by commas.
 
-<RequestExample>
-
-```filename
+```
 curl -X 'POST' \
    '{{baseUrl}}' \
    -H 'Authorization: Bearer {bearerToken}' \
@@ -365,19 +339,13 @@ curl -X 'POST' \
 }'
 ```
 
-</RequestExample>
-
 ### Response
 
 If the request is successful, the server responds with a `201 Created` status code. The response body contains the new order ID, when the order was created, status, priority, dish IDs, and any special requests.
 
-<ResponseExample>
-
-```filename
+```
 {"id":"68587bc0ab04476449a28c40","created_at":"2025-06-22T21:55:12.942Z","updated_at":"2025-06-22T21:55:12.942Z","scheduled_at":null,"table_number":10,"status":"Received","priority":3,"dish_ids":["681e38bfc19ebac4a91424b2"],"special_requests":"Easy on the bell peppers"}
 ```
-
-</ResponseExample>
 
 ## 6. Confirm the order
 
