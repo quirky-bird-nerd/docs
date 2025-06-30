@@ -4,7 +4,7 @@ title: "Staff"
 
 # Staff API Flow
 
-This flow describes how a staff members handle orders in the Kitchen Delivery System (KDS).
+This flow describes how a staff members handle orders in the Kitchen Delivery System (KDS).123
 
 ## 1. Display orders
 
@@ -48,8 +48,6 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 The client sends an HTTP request to the `orders/{id}`endpoint, containing the order ID. This allows the expeditor to adjust the priority of the order from 1 to 5, with 1 being the highest priority. The example below sets`priority` to `1`.
 
-
-
 ```
 curl -X 'PUT' \
    '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
@@ -72,13 +70,9 @@ curl -X 'PUT' \
       }'
 ```
 
-
-
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID and an updated `priority`of `1`.
-
-
 
 ```
 {
@@ -99,15 +93,11 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-
-
 ## 3. Initiate preparation
 
 ### Request
 
 Now that the order is prioritzed, the expeditor can initiate the preparation of the order by setting the order status to `In Progress`. The client sends an HTTP request to the `orders/{id}`endpoint.
-
-
 
 ```
 
@@ -132,12 +122,9 @@ curl -X 'PUT' \
       }'
 ```
 
-
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with the updated status.
-
-
 
 ```
 {
@@ -158,27 +145,19 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-
-
 ## 4. Order preparation by station
 
 ### Request
 
 Each dish is assigned to a specific station (e.g., cold, hot, beverages). Stations responsible for each dish see their respective parts of the order on their KDS. The client sends an HTTP request to the `order/{id}/dishes `endpoint, filtering the response to only include dishes that belong to specific `station`.
 
-
-
 ```
 curl -X GET "{{baseURL}}/orders/681e38bfc19ebac4a9142544/dishes?filter=station.eq~hot"
 ```
 
-
-
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body returns the orders with a `station `of `hot`.
-
-
 
 ```
 {
@@ -261,27 +240,19 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-
-
 ## 5. Display dish ingredients
 
 ### Request
 
 When the staff begins preparing dishes at their station, they need to know each dish's ingredients. The client sends an HTTP request to `dishes/{id}/ingredients`endpoint, using the dish ID.
 
-
-
 ```
 curl -X GET "{{baseURL}}/dishes/681e38bfc19ebac4a91424c3/ingredients"
 ```
 
-
-
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with each ingredient.
-
-
 
 ```
 {
@@ -331,8 +302,6 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-
-
 ## 6. Ready order for assembly
 
 When the station completes preparation of their part of the order, they mark it as Ready for Assembly on their KDS. The expeditor is notified when all stations have their parts marked as ready.
@@ -342,8 +311,6 @@ When the station completes preparation of their part of the order, they mark it 
 ### Request
 
 The expeditor assembles the parts of the order from different stations. Once assembled, the expeditor updates the order status to `On the Way`. The client sends an HTTP request to the `orders/{id} `endpoint, updating the status of the order from `In Progress` to `On the Way`.
-
-
 
 ```
 curl -X 'PUT' \
@@ -367,13 +334,9 @@ curl -X 'PUT' \
       }'
 ```
 
-
-
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID you specified and a `status `of `On the Way`.
-
-
 
 ```
 {
@@ -393,4 +356,3 @@ If the request is successful, the server responds with a `200 OK` status code. T
   "special_requests": null
 }
 ```
-
