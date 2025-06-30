@@ -12,19 +12,13 @@ This flow describes how a staff members handle orders in the Kitchen Delivery Sy
 
 The client sends an HTTP request to the `orders` endpoint to retrieve a list of orders. This example shows a request for orders that are ready for pickup and have a priority of 1.
 
-<RequestExample>
-
-```filename
+```
 curl -X GET "{{baseURL}}/orders?filter=status.eq~Ready%20for%20Pickup|priority.eq~1"
 ```
 
-</RequestExample>
-
 If the request is successful, the server responds with a `200 OK` status code. The response body contains each the orders you specified, along with their dish IDs, patron name, status, and priority.
 
-<ResponseExample>
-
-```filename
+```
 {
   "results": [
     {
@@ -48,17 +42,15 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
-
 ## 2. Prioritize orders
 
 ### Request
 
 The client sends an HTTP request to the `orders/{id}`endpoint, containing the order ID. This allows the expeditor to adjust the priority of the order from 1 to 5, with 1 being the highest priority. The example below sets`priority` to `1`.
 
-<RequestExample>
 
-```filename
+
+```
 curl -X 'PUT' \
    '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
    -H 'Authorization: Bearer fcb0d3f1-0077-430c-b84f-c1cddc1d048b' \
@@ -80,15 +72,15 @@ curl -X 'PUT' \
       }'
 ```
 
-</RequestExample>
+
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID and an updated `priority`of `1`.
 
-<ResponseExample>
 
-```filename
+
+```
 {
   "id": "681e38bfc19ebac4a9142544",
   "created_at": "2024-05-23T06:21:08.754Z",
@@ -107,7 +99,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
+
 
 ## 3. Initiate preparation
 
@@ -115,9 +107,9 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 Now that the order is prioritzed, the expeditor can initiate the preparation of the order by setting the order status to `In Progress`. The client sends an HTTP request to the `orders/{id}`endpoint.
 
-<RequestExample>
 
-```filename
+
+```
 
 curl -X 'PUT' \
    '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
@@ -140,15 +132,14 @@ curl -X 'PUT' \
       }'
 ```
 
-</RequestExample>
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with the updated status.
 
-<ResponseExample>
 
-```filename
+
+```
 {
   "id": "681e38bfc19ebac4a9142544",
   "created_at": "2024-05-23T06:21:08.754Z",
@@ -167,7 +158,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
+
 
 ## 4. Order preparation by station
 
@@ -175,21 +166,21 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 Each dish is assigned to a specific station (e.g., cold, hot, beverages). Stations responsible for each dish see their respective parts of the order on their KDS. The client sends an HTTP request to the `order/{id}/dishes `endpoint, filtering the response to only include dishes that belong to specific `station`.
 
-<RequestExample>
 
-```filename
+
+```
 curl -X GET "{{baseURL}}/orders/681e38bfc19ebac4a9142544/dishes?filter=station.eq~hot"
 ```
 
-</RequestExample>
+
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body returns the orders with a `station `of `hot`.
 
-<ResponseExample>
 
-```filename
+
+```
 {
   "results": [
     {
@@ -270,7 +261,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
+
 
 ## 5. Display dish ingredients
 
@@ -278,21 +269,21 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 When the staff begins preparing dishes at their station, they need to know each dish's ingredients. The client sends an HTTP request to `dishes/{id}/ingredients`endpoint, using the dish ID.
 
-<RequestExample>
 
-```filename
+
+```
 curl -X GET "{{baseURL}}/dishes/681e38bfc19ebac4a91424c3/ingredients"
 ```
 
-</RequestExample>
+
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID, along with each ingredient.
 
-<ResponseExample>
 
-```filename
+
+```
 {
   "results": [
     {
@@ -340,7 +331,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
+
 
 ## 6. Ready order for assembly
 
@@ -352,9 +343,9 @@ When the station completes preparation of their part of the order, they mark it 
 
 The expeditor assembles the parts of the order from different stations. Once assembled, the expeditor updates the order status to `On the Way`. The client sends an HTTP request to the `orders/{id} `endpoint, updating the status of the order from `In Progress` to `On the Way`.
 
-<RequestExample>
 
-```filename
+
+```
 curl -X 'PUT' \
    '{{baseURL}}/orders/681e38bfc19ebac4a9142544' \
    -H 'Authorization: Bearer 65f1e860-0f4f-470a-b833-13346e87fde7' \
@@ -376,15 +367,15 @@ curl -X 'PUT' \
       }'
 ```
 
-</RequestExample>
+
 
 ### Response
 
 If the request is successful, the server responds with a `200 OK` status code. The response body contains the order ID you specified and a `status `of `On the Way`.
 
-<ResponseExample>
 
-```filename
+
+```
 {
   "id": "681e38bfc19ebac4a9142544",
   "created_at": "2024-05-23T06:21:08.754Z",
@@ -403,4 +394,3 @@ If the request is successful, the server responds with a `200 OK` status code. T
 }
 ```
 
-</ResponseExample>
