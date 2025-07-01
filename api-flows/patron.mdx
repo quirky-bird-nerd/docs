@@ -13,7 +13,7 @@ This flow describes how a patron browses through the app and places an order fro
 The client sends an HTTP request to the `dishes` endpoint and retrieves a list of dishes for the selected food category tab. In the following example, the user selected the Appetizers tab.
 
 ```
-curl \-X GET "{{baseURL}}/orders?filter=status.eq~Ready%20for%20Pickup|priority.eq~1"
+curl \-X GET "\{\{baseUrl\}\}/dishes?filter=category.eq~Appetizers"
 ```
 
 ### Response
