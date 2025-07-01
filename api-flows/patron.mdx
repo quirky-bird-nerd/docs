@@ -12,9 +12,8 @@ This flow describes how a patron browses through the app and places an order fro
 
 The client sends an HTTP request to the `dishes` endpoint and retrieves a list of dishes for the selected food category tab. In the following example, the user selected the Appetizers tab.
 
-
 ```
-curl X GET "{{baseURL}}/dishes?filter=category.eq~Appetizers"
+curl \-X GET "{{baseURL}}/orders?filter=status.eq~Ready%20for%20Pickup|priority.eq~1"
 ```
 
 ### Response
@@ -25,7 +24,7 @@ If the request is successful, the server responds with a `200 OK` status code. T
 
 ### Request
 
-The client sends an HTTP request to `ingredients` endpoint, containing the ingredient ID. This allows the app to check if there are enough ingredients to create the dish. Fields for `in_stock_qty` and `name`are included.
+The client sends an HTTP request to `ingredients` endpoint, containing the ingredient ID. This allows the app to check if there are enough ingredients to create the dish. Fields for `in_stock_qty` and `name` are included.
 
 ### Response
 
