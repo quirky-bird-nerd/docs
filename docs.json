@@ -61,7 +61,7 @@
             "group": "Workflow Examples",
             "pages": [
               "api-flows/patron",
-	      "api-flows/staff"
+	          "api-flows/staff"
             ]
           }
         ]
