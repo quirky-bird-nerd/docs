@@ -33,7 +33,7 @@ tags:
 paths:
   /orders:
     post:
-      summary: Create an order.
+      summary: Create an order
       operationId: postOrder
       description: Create an order by specifying the customer name, table number, and dish_ids.
       tags:
@@ -79,7 +79,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/CreateOrderRequest'
     get:
-      summary: Get a list of orders.
+      summary: Get a list of orders
       description: Get a list of orders. List results can be paginated, limited to a specific number, filtered, sorted, and displayed in ascending or descending order.
       operationId: getOrderList
       tags:
@@ -151,7 +151,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /orders/{id}:
     get:
-      summary: Get an order's details.
+      summary: Get an order's details
       description: Get an order's details using the order ID.
       operationId: getOrder
       tags:
@@ -196,7 +196,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     put:
-      summary: Update an order.
+      summary: Update an order
       description: Update an order's customer name, table number, status, priority, special request, etc.
       operationId: putOrder
       tags:
@@ -255,7 +255,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     delete:
-      summary: Delete an order.
+      summary: Delete an order
       description: Delete an order using the order ID.
       operationId: deleteOrder
       tags:
@@ -293,7 +293,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /orders/{id}/dishes:
     get:
-      summary: Retrieve dishes for an order.
+      summary: Retrieve dishes for an order
       description: Retrieve dishes for an order using the order ID.
       operationId: getOrderDishes
       tags:
@@ -390,7 +390,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /dishes:
     post:
-      summary: Create a dish.
+      summary: Create a dish
       tags:
         - Dishes
       operationId: postDishes
@@ -436,7 +436,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     get:
-      summary: Get a list of dishes.
+      summary: Get a list of dishes
       description: Get a list of dishes. List results can be paginated, limited to a specific number, filtered, sorted, and displayed in ascending or descending order.
       operationId: getDishList
       tags:
@@ -521,7 +521,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /dishes/{id}:
     get:
-      summary: Get a dish's details.
+      summary: Get a dish's details
       description: Get an dish's details using the dish ID.
       operationId: getDish
       tags:
@@ -566,7 +566,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     put:
-      summary: Update a dish.
+      summary: Update a dish
       operationId: putDish
       tags:
         - Dishes
@@ -622,7 +622,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     delete:
-      summary: Delete a dish.
+      summary: Delete a dish
       description: Delete a dish using the dish ID.
       operationId: deleteDish
       tags:
@@ -660,7 +660,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /dishes/{id}/ingredients:
     get:
-      summary: Get a dish's ingredients.
+      summary: Get a dish's ingredients
       description: Get a dish's ingredients using the dish ID.
       operationId: getDishIngredients
       tags:
@@ -797,7 +797,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     get:
-      summary: Get a list of ingredients.
+      summary: Get a list of ingredients
       description: Get a list of ingredients. List results can be paginated, limited to a specific number, filtered, sorted, and displayed in ascending or descending order.
       operationId: getIngredientList
       tags:
@@ -881,7 +881,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /ingredients/{id}:
     get:
-      summary: Get an ingredient's details.
+      summary: Get an ingredient's details
       description: Get an ingredient's details using the ingredient ID.
       operationId: getIngredient
       tags:
@@ -926,7 +926,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     put:
-      summary: Update an ingredient.
+      summary: Update an ingredient
       description: Update an ingredient's name, in-stock quantity, and price.
       operationId: putIngredient
       tags:
@@ -973,7 +973,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     delete:
-      summary: Delete an ingredient.
+      summary: Delete an ingredient
       description: Delete an ingredient using the ingredient ID.
       operationId: deleteIngredient
       tags:
@@ -1011,7 +1011,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /users:
     post:
-      summary: Create a user account.
+      summary: Create a user account
       description: Create a user account using an email, password, role, and user name.
       operationId: postUser
       tags:
@@ -1046,7 +1046,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
       security: []
     get:
-      summary: Get a list of users.
+      summary: Get a list of users
       description: Get a list of users. List results can be paginated, limited to a specific number, filtered, sorted, and displayed in ascending or descending order.
       operationId: getAllUsers
       tags:
@@ -1130,7 +1130,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /users/{id}:
     get:
-      summary: Get a user's details.
+      summary: Get a user's details
       description: Get a user's details using the user ID.
       operationId: getUser
       tags:
@@ -1175,7 +1175,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     put:
-      summary: Update a user.
+      summary: Update a user
       description: Update a user's email, password, role, or user name.
       operationId: putUser
       tags:
@@ -1231,7 +1231,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
     delete:
-      summary: Delete a user.
+      summary: Delete a user
       description: Delete a user using the user ID.
       operationId: deleteUser
       tags:
@@ -1269,7 +1269,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /auth/token:
     post:
-      summary: Authenticate a user and obtain an access token.
+      summary: Authenticate a user and obtain an access token
       description: Authenticate a user and obtain an access token using the grant type, user name, and password.
       operationId: postAuthLogin
       tags:
@@ -1306,7 +1306,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
   /auth/refresh-token:
     post: 
-      summary: Refresh the access token.
+      summary: Refresh the access token
       description: Refresh the access token using the access token ID.
       operationId: postAuthRefreshToken
       tags:
@@ -1414,7 +1414,7 @@ components:
               station:
                 $ref: '#/components/schemas/Station'
     CreateIngredientRequest:
-      description: Create ingredients.
+      description: Create ingredients
       required: true
       content:
         application/json:
