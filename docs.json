@@ -55,6 +55,10 @@
         ]
       },
       {
+        "tab": "Kitchen Display System API Reference",
+        "openapi": "api-reference/openapi.yaml"
+      },    
+      {
         "tab": "Workflows",
         "groups": [
           {
